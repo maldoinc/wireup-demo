@@ -1,0 +1,4 @@
+wireup==0.1.0
+sqlalchemy~=2.0.20
+flask~=2.3.3
+pydantic~=2.3.0
