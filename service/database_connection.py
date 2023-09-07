@@ -6,12 +6,12 @@ from wireup import container, wire
 @container.register
 class DatabaseConnection:
     def __init__(self, connection_url: str = wire(param="db.connection_str")):
-        self._engine = create_engine(connection_url)
+        self.engine = create_engine(connection_url)
         self._session = None
 
     @property
     def session(self) -> Session:
         if not self._session:
-            self._session = sessionmaker(bind=self._engine)()
+            self._session = sessionmaker(bind=self.engine)()
 
         return self._session
