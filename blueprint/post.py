@@ -2,8 +2,8 @@ from flask import Blueprint, abort, request
 from wireup import container
 
 from model.api import PostCreateModel
-from service import DatabaseConnection, PostRepository
-from util import ApiResponse, ApiEndpoint
+from service import DatabaseConnection, PostRepository, MailerService
+from util import ApiEndpoint, ApiResponse
 
 bp = Blueprint("post", __name__, url_prefix="/posts")
 
@@ -16,9 +16,13 @@ def get_posts(post_repository: PostRepository):
 
 @bp.post("/")
 @container.autowire
-def create_post(db: DatabaseConnection, post_repository: PostRepository):
+def create_post(
+    db: DatabaseConnection, post_repository: PostRepository, mailer: MailerService
+):
     new_post = post_repository.create(PostCreateModel.model_validate(request.json))
     db.session.commit()
+
+    mailer.notify_admin_for_post(new_post)
 
     return ApiResponse.created(
         data=new_post, endpoint=ApiEndpoint("post.get_post", post_id=new_post.id)

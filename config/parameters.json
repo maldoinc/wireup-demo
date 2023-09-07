@@ -1,0 +1,6 @@
+{
+  "mailer.from_name": "Example Blog Postmaster",
+  "mailer.from_address": "noreply@example.com",
+  "mailer.admin_name": "John Doe",
+  "mailer.admin_address": "doe@example.com"
+}

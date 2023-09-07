@@ -19,7 +19,7 @@ class PostRepository:
         return [PostGetModel.model_validate(p) for p in posts]
 
     def find_one_by_id(self, pk: int) -> Optional[PostGetModel]:
-        if post := self.db.session.query(Post).get(pk):
+        if post := self.db.session.get(Post, pk):
             return PostGetModel.model_validate(post)
 
         return None

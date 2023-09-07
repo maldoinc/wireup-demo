@@ -1,3 +1,4 @@
+import json
 import os
 
 from flask import Flask
@@ -17,6 +18,9 @@ def create_app() -> Flask:
     )
 
     container.params.put("db.connection_url", os.environ.get("DB_CONNECTION_URL"))
+    container.params.put("mailer.email_dsn", os.environ.get("MAILER_DSN"))
+    with open("./config/parameters.json") as f:
+        container.params.update(json.loads(f.read()))
 
     return app
 

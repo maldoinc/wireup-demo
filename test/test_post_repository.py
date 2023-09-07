@@ -1,26 +1,10 @@
 import datetime
 from unittest import TestCase
 
-from model.api import PostGetModel, PostCreateModel
-from model.database import DbBaseModel, Post
+from model.api import PostCreateModel
+from model.database import DbBaseModel
 from service import PostRepository, DatabaseConnection
-
-
-def _make_db_post(i: int) -> Post:
-    return Post(
-        title=f"title {i}",
-        content=f"content {i}",
-        created_at=datetime.datetime(2023, 1, i),
-    )
-
-
-def _make_api_post(i: int) -> PostGetModel:
-    return PostGetModel(
-        id=i,
-        title=f"title {i}",
-        content=f"content {i}",
-        created_at=datetime.datetime(2023, 1, i),
-    )
+from test.fixtures import _make_db_post, _make_api_post
 
 
 class DatabaseConnectionTest(TestCase):
