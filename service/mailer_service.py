@@ -1,6 +1,7 @@
 from dataclasses import dataclass
+from typing_extensions import Annotated
 
-from wireup import container, wire
+from wireup import container, Wire
 
 from model.app import EmailMessage, EmailAddress
 from model.database import Post
@@ -9,13 +10,13 @@ from model.database import Post
 @container.register
 @dataclass(frozen=True)
 class MailerService:
-    email_from_name: str = wire(param="mailer.from_name")
-    email_from_address: str = wire(param="mailer.from_address")
+    email_from_name: Annotated[str, Wire(param="mailer.from_name")]
+    email_from_address: Annotated[str, Wire(param="mailer.from_address")]
 
-    admin_name: str = wire(param="mailer.admin_name")
-    admin_address: str = wire(param="mailer.admin_address")
+    admin_name: Annotated[str, Wire(param="mailer.admin_name")]
+    admin_address: Annotated[str, Wire(param="mailer.admin_address")]
 
-    email_dsn: str = wire(param="mailer.email_dsn")
+    email_dsn: Annotated[str, Wire(param="mailer.email_dsn")]
 
     def notify_admin_for_post(self, post: Post):
         self.send_email(self.make_email_from_post(post))

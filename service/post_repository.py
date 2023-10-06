@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Optional, Tuple, Any, List
+from typing import Optional
 
 from wireup import container
 
@@ -27,5 +27,6 @@ class PostRepository:
     def create(self, post: PostCreateModel) -> Post:
         post = Post(**post.model_dump())
         self.db.session.add(post)
+        self.db.session.commit()
 
         return post

@@ -16,12 +16,8 @@ def get_posts(post_repository: PostRepository):
 
 @bp.post("/")
 @container.autowire
-def create_post(
-    db: DatabaseConnection, post_repository: PostRepository, mailer: MailerService
-):
+def create_post(post_repository: PostRepository, mailer: MailerService):
     new_post = post_repository.create(PostCreateModel.model_validate(request.json))
-    db.session.commit()
-
     mailer.notify_admin_for_post(new_post)
 
     return ApiResponse.created(
