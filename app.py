@@ -1,7 +1,5 @@
-import json
-import os
-
 import yaml
+
 from flask import Flask
 from pydantic import ValidationError
 from pyaml_env import parse_config

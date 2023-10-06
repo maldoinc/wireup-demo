@@ -2,7 +2,7 @@ from flask import Blueprint, abort, request
 from wireup import container
 
 from model.api import PostCreateModel
-from service import DatabaseConnection, PostRepository, MailerService
+from service import PostRepository, MailerService
 from util import ApiEndpoint, ApiResponse
 
 bp = Blueprint("post", __name__, url_prefix="/posts")
@@ -21,7 +21,7 @@ def create_post(post_repository: PostRepository, mailer: MailerService):
     mailer.notify_admin_for_post(new_post)
 
     return ApiResponse.created(
-        data=new_post, endpoint=ApiEndpoint("post.get_post", post_id=new_post.id)
+        data=new_post, location=ApiEndpoint("post.get_post", post_id=new_post.id)
     )
 
 

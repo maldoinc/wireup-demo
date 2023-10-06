@@ -18,8 +18,8 @@ def dump_model(model: Model):
 
 
 class ApiEndpoint:
-    def __init__(self, endpoint: str, **params):
-        self.endpoint = endpoint
+    def __init__(self, name: str, **params):
+        self.name = name
         self.params = params
 
 
@@ -42,13 +42,13 @@ class ApiResponse:
         return ApiResponse.make(data, 200)
 
     @staticmethod
-    def created(data: ResponseObject, endpoint: ApiEndpoint):
+    def created(data: ResponseObject, location: ApiEndpoint):
         return ApiResponse.make(
             data,
             status=201,
             headers={
                 "Location": url_for(
-                    endpoint.endpoint, _external=True, **endpoint.params
+                    location.name, _external=True, **location.params
                 )
             },
         )
