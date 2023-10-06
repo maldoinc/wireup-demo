@@ -1,6 +1,7 @@
 from unittest import TestCase
 
 from model.app import EmailMessage, EmailAddress
+from model.config import NotificationMailerConfig
 from service import MailerService
 from test.fixtures import _make_db_post
 
@@ -8,11 +9,13 @@ from test.fixtures import _make_db_post
 class TestMailer(TestCase):
     def setUp(self) -> None:
         self.mailer = MailerService(
-            email_from_name="from_name",
-            email_from_address="mailer@example.com",
-            admin_name="Bob",
-            admin_address="bob@example.com",
-            email_dsn="smtp:///null",
+            notifier_config=NotificationMailerConfig(
+                from_name="from_name",
+                from_address="mailer@example.com",
+                admin_name="Bob",
+                admin_address="bob@example.com",
+                dsn="smtp:///null",
+            )
         )
 
     def test_mailer_generates_email(self):

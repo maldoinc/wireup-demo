@@ -1,0 +1,8 @@
+app:
+  notification_mailer: !!python/object:model.config.NotificationMailerConfig
+    from_name: "Example Blog Postmaster"
+    from_address: "noreply@example.com"
+    admin_name: "John Doe"
+    admin_address: "doe@example.com"
+    dsn: !ENV ${MAILER_DSN}
+  db_connection_url: !ENV ${DB_CONNECTION_URL}

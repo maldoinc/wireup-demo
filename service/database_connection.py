@@ -7,7 +7,7 @@ from wireup import container, Wire
 
 @container.register
 class DatabaseConnection:
-    def __init__(self, connection_url: Annotated[str, Wire(param="db.connection_str")]):
+    def __init__(self, connection_url: Annotated[str, Wire(param="db_connection_url")]):
         self.engine = create_engine(connection_url)
         self._session = None
 

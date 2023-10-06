@@ -1,8 +1,10 @@
 import json
 import os
 
+import yaml
 from flask import Flask
 from pydantic import ValidationError
+from pyaml_env import parse_config
 from wireup import container
 
 import blueprint.post
@@ -17,10 +19,8 @@ def create_app() -> Flask:
         ValidationError, handler.jsonify_pydantic_validation_errors
     )
 
-    container.params.put("db.connection_url", os.environ.get("DB_CONNECTION_URL"))
-    container.params.put("mailer.email_dsn", os.environ.get("MAILER_DSN"))
-    with open("./config/parameters.json") as f:
-        container.params.update(json.loads(f.read()))
+    all_config = parse_config("config/parameters.yaml", loader=yaml.UnsafeLoader)
+    container.params.update(all_config["app"])
 
     return app
 
