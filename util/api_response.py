@@ -1,6 +1,6 @@
 from typing import Optional
 
-from flask import jsonify, Response, url_for
+from flask import Response, jsonify, url_for
 from pydantic import BaseModel
 from sqlalchemy import inspect
 

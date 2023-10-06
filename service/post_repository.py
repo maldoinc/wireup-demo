@@ -3,7 +3,7 @@ from typing import Optional
 
 from wireup import container
 
-from model.api import PostGetModel, PostCreateModel
+from model.api import PostCreateModel, PostGetModel
 from model.database import Post
 from service import DatabaseConnection
 

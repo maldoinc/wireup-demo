@@ -1,9 +1,9 @@
 from dataclasses import dataclass
+
 from typing_extensions import Annotated
+from wireup import Wire, container
 
-from wireup import container, Wire
-
-from model.app import EmailMessage, EmailAddress
+from model.app import EmailAddress, EmailMessage
 from model.config import NotificationMailerConfig
 from model.database import Post
 

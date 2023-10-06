@@ -1,8 +1,7 @@
 import yaml
-
 from flask import Flask
-from pydantic import ValidationError
 from pyaml_env import parse_config
+from pydantic import ValidationError
 from wireup import container
 
 import blueprint.post

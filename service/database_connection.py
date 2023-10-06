@@ -1,8 +1,7 @@
-from typing_extensions import Annotated
-
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, Session
-from wireup import container, Wire
+from sqlalchemy.orm import Session, sessionmaker
+from typing_extensions import Annotated
+from wireup import Wire, container
 
 
 @container.register

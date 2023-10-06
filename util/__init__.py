@@ -1,3 +1,3 @@
-from .api_response import ApiResponse, ApiEndpoint
+from .api_response import ApiEndpoint, ApiResponse
 
 __all__ = ["ApiEndpoint", "ApiResponse"]

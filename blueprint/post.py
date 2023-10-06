@@ -2,7 +2,7 @@ from flask import Blueprint, abort, request
 from wireup import container
 
 from model.api import PostCreateModel
-from service import PostRepository, MailerService
+from service import MailerService, PostRepository
 from util import ApiEndpoint, ApiResponse
 
 bp = Blueprint("post", __name__, url_prefix="/posts")
