@@ -2,7 +2,8 @@ from flask import Blueprint, Response, abort, request
 from wireup import container
 
 from model.api import PostCreateModel
-from service import MailerService, PostRepository
+from service import PostRepository
+from service.post_service import PostService
 from util import ApiEndpoint, ApiResponse
 
 bp = Blueprint("post", __name__, url_prefix="/posts")
@@ -16,9 +17,8 @@ def get_posts(post_repository: PostRepository) -> Response:
 
 @bp.post("/")
 @container.autowire
-def create_post(post_repository: PostRepository, mailer: MailerService) -> Response:
-    new_post = post_repository.create(PostCreateModel.model_validate(request.json))
-    mailer.notify_admin_for_post(new_post)
+def create_post(post_service: PostService) -> Response:
+    new_post = post_service.create_post(PostCreateModel.model_validate(request.json))
 
     return ApiResponse.created(
         data=new_post,
