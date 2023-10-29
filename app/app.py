@@ -17,6 +17,10 @@ def create_app() -> Flask:
         handler.jsonify_pydantic_validation_errors,
     )
 
+    # Load all configuration from yaml into a dictionary then register them in the container.
+    # Services asking for parameter can reference them by name.
+    # Note that types don't have to be just scalar values.
+    # notification_mailer is a dataclass that will get injected as a parameter.
     all_config = parse_config("config/parameters.yaml", loader=yaml.UnsafeLoader)
     container.params.update(all_config["app"])
 

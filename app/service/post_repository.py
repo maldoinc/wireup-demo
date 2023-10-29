@@ -10,6 +10,8 @@ from app.service import DatabaseConnection
 @container.register
 @dataclass
 class PostRepository:
+    # Service injection is performed by the declared type so this
+    # Does not need to use `Annotated`.
     db: DatabaseConnection
 
     def find_all(self) -> list[PostGetModel]:

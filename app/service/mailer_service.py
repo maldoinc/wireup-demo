@@ -8,9 +8,24 @@ from app.model.config import NotificationMailerConfig
 from app.model.db import Post
 
 
+# Register a mailer service. Registration can be done on dataclasses as well,
+# although a services does not usually transfer data.
+# The dataclass decorator provides an `__init__` method which the container makes use of.
+# So this is really just a shorter way to define an init method.
+#
+# Despite how this might look this is still "constructor" injection
+# rather than field injection which is deliberately NOT supported.
+#
+# Order here is important and @dataclass must be closer to the
+# class declaration so that it is executed before `container.register`.
 @container.register
 @dataclass(frozen=True)
 class MailerService:
+    # Values in the parameter bag don't have to be scalar.
+    # Structured data can also be used for configuration.
+    # The alternative here would be to inject all the
+    # fields of `notifier_config` as individual dependencies
+    # which is not as nice.
     notifier_config: Annotated[
         NotificationMailerConfig,
         Wire(param="notification_mailer"),
