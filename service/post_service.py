@@ -14,7 +14,9 @@ class PostService:
     mailer: MailerService
 
     def create_post(self, post: PostCreateModel) -> Post:
-        new_post = self.repository.create(post)
+        new_post = Post(**post.model_dump())
+
+        self.repository.save(new_post)
         self.mailer.notify_admin_for_post(new_post)
 
         return new_post

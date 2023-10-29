@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 from wireup import container
 
-from model.api import PostCreateModel, PostGetModel
+from model.api import PostGetModel
 from model.db import Post
 from service import DatabaseConnection
 
@@ -23,9 +23,6 @@ class PostRepository:
 
         return None
 
-    def create(self, post: PostCreateModel) -> Post:
-        post = Post(**post.model_dump())
+    def save(self, post: Post) -> None:
         self.db.session.add(post)
         self.db.session.commit()
-
-        return post
