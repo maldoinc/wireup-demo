@@ -4,7 +4,7 @@ from flask import Response, jsonify, url_for
 from pydantic import BaseModel
 from sqlalchemy import inspect
 
-from model.db import DbBaseModel
+from app.model.db import DbBaseModel
 
 Model = BaseModel | DbBaseModel
 ResponseObject = list[Model] | Model

@@ -1,7 +1,7 @@
 from datetime import datetime
 
-from model.api import PostGetModel
-from model.db import Post
+from app.model.api import PostGetModel
+from app.model.db import Post
 
 
 def _make_db_post(i: int) -> Post:

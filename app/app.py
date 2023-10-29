@@ -4,15 +4,15 @@ from pyaml_env import parse_config
 from pydantic import ValidationError
 from wireup import container
 
-import blueprint.post
-import handler
+from app import handler
+from app.blueprint.post import bp as post_blueprint
 
 
 def create_app() -> Flask:
-    app = Flask(__name__)
+    flask_app = Flask(__name__)
 
-    app.register_blueprint(blueprint.post.bp)
-    app.register_error_handler(
+    flask_app.register_blueprint(post_blueprint)
+    flask_app.register_error_handler(
         ValidationError,
         handler.jsonify_pydantic_validation_errors,
     )
@@ -20,7 +20,7 @@ def create_app() -> Flask:
     all_config = parse_config("config/parameters.yaml", loader=yaml.UnsafeLoader)
     container.params.update(all_config["app"])
 
-    return app
+    return flask_app
 
 
 if __name__ == "__main__":

@@ -2,9 +2,9 @@ from dataclasses import dataclass
 
 from wireup import container
 
-from model.api import PostGetModel
-from model.db import Post
-from service import DatabaseConnection
+from app.model.api import PostGetModel
+from app.model.db import Post
+from app.service import DatabaseConnection
 
 
 @container.register

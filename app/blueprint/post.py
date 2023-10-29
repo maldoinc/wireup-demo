@@ -1,10 +1,10 @@
 from flask import Blueprint, Response, abort, request
 from wireup import container
 
-from model.api import PostCreateModel
-from service import PostRepository
-from service.post_service import PostService
-from util import ApiEndpoint, ApiResponse
+from app.model.api import PostCreateModel
+from app.service import PostRepository
+from app.service.post_service import PostService
+from app.util import ApiEndpoint, ApiResponse
 
 bp = Blueprint("post", __name__, url_prefix="/posts")
 

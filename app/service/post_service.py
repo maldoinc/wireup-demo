@@ -2,9 +2,9 @@ from dataclasses import dataclass
 
 from wireup import container
 
-from model.api import PostCreateModel
-from model.db import Post
-from service import MailerService, PostRepository
+from app.model.api import PostCreateModel
+from app.model.db import Post
+from app.service import MailerService, PostRepository
 
 
 @container.register

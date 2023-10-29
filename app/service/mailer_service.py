@@ -3,9 +3,9 @@ from typing import Annotated
 
 from wireup import Wire, container
 
-from model.app import EmailAddress, EmailMessage
-from model.config import NotificationMailerConfig
-from model.db import Post
+from app.model.app import EmailAddress, EmailMessage
+from app.model.config import NotificationMailerConfig
+from app.model.db import Post
 
 
 @container.register
