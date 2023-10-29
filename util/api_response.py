@@ -1,16 +1,17 @@
-from typing import Optional
+from typing import Any, ParamSpec
 
 from flask import Response, jsonify, url_for
 from pydantic import BaseModel
 from sqlalchemy import inspect
 
-from model.database import DbBaseModel
+from model.db import DbBaseModel
 
 Model = BaseModel | DbBaseModel
 ResponseObject = list[Model] | Model
+P = ParamSpec("P")
 
 
-def dump_model(model: Model):
+def dump_model(model: Model) -> Any:
     if isinstance(model, BaseModel):
         return model.model_dump()
 
@@ -18,7 +19,7 @@ def dump_model(model: Model):
 
 
 class ApiEndpoint:
-    def __init__(self, name: str, **params):
+    def __init__(self, name: str, **params: P.kwargs) -> None:
         self.name = name
         self.params = params
 
@@ -28,8 +29,8 @@ class ApiResponse:
     def make(
         res: ResponseObject,
         status: int,
-        headers: Optional[dict[str, str]] = None,
-    ):
+        headers: dict[str, str] | None = None,
+    ) -> Response:
         response = ApiResponse._make_response(res)
         response.status_code = status
         if headers:
@@ -38,25 +39,25 @@ class ApiResponse:
         return response
 
     @staticmethod
-    def ok(data: ResponseObject):
+    def ok(data: ResponseObject) -> Response:
         return ApiResponse.make(data, 200)
 
     @staticmethod
-    def created(data: ResponseObject, location: ApiEndpoint):
+    def created(data: ResponseObject, location: ApiEndpoint) -> Response:
         return ApiResponse.make(
             data,
             status=201,
             headers={
                 "Location": url_for(
-                    location.name, _external=True, **location.params
-                )
+                    location.name,
+                    _external=True,
+                    **location.params,
+                ),
             },
         )
 
     @staticmethod
     def _make_response(res: list[Model] | Model) -> Response:
-        data = (
-            [dump_model(x) for x in res] if isinstance(res, list) else dump_model(res)
-        )
+        data = [dump_model(x) for x in res] if isinstance(res, list) else dump_model(res)
 
         return jsonify({"data": data})

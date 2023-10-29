@@ -15,17 +15,18 @@ class TestMailer(TestCase):
                 admin_name="Bob",
                 admin_address="bob@example.com",
                 dsn="smtp:///null",
-            )
+            ),
         )
 
-    def test_mailer_generates_email(self):
+    def test_mailer_generates_email(self) -> None:
         email = self.mailer.make_email_from_post(_make_db_post(1))
 
         self.assertEqual(
             email,
             EmailMessage(
                 from_address=EmailAddress(
-                    name="from_name", address="mailer@example.com"
+                    name="from_name",
+                    address="mailer@example.com",
                 ),
                 to_addresses=[EmailAddress(name="Bob", address="bob@example.com")],
                 subject="New blog post: title 1",

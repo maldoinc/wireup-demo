@@ -13,7 +13,8 @@ def create_app() -> Flask:
 
     app.register_blueprint(blueprint.post.bp)
     app.register_error_handler(
-        ValidationError, handler.jsonify_pydantic_validation_errors
+        ValidationError,
+        handler.jsonify_pydantic_validation_errors,
     )
 
     all_config = parse_config("config/parameters.yaml", loader=yaml.UnsafeLoader)

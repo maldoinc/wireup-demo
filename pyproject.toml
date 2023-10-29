@@ -1,0 +1,41 @@
+[tool.poetry]
+name = "wireup-demo"
+version = "0.1.0"
+description = "Demo project for the maldoinc/wireup package"
+authors = ["Aldo Mateli <aldo.mateli@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+wireup = "0.5.0"
+sqlalchemy = "2.0.20"
+flask = "^2.3.3"
+pydantic = "^2.3.0"
+typing_extensions = "^4.8.0"
+pyyaml = "^6.0.1"
+pyaml-env = "^1.2.1"
+
+[tool.poetry.dev-dependencies]
+ruff = "0.1.*"
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+select = ["ALL"]
+ignore = [
+    "ANN401", # Allow returning any. Parameter bag has to store/retrieve arbitraty types.
+    "PT009", # Prefer using assertEqual instead of plain asserts
+    "ANN101", # Exclude self from type hint requirement,
+    "TD003", # Exclude "missing issue link for todos",
+    "FIX002", # Disable "Line contains to do, consider resolving the issue". It will be done, in due time.
+    "D", # Docs will be added as necessary for demo project.
+    "A003", # Allow use of id in classes.
+    "COM812", # Disable to make ruff formatter happy
+    "ISC001",  # Disable to make ruff formatter happy
+    "DTZ001", # Tzinfo does not play nicely with sqlite. Ignore for demo
+]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

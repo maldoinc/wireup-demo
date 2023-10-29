@@ -1,10 +1,9 @@
 from dataclasses import dataclass
-from typing import Optional
 
 from wireup import container
 
 from model.api import PostCreateModel, PostGetModel
-from model.database import Post
+from model.db import Post
 from service import DatabaseConnection
 
 
@@ -18,7 +17,7 @@ class PostRepository:
 
         return [PostGetModel.model_validate(p) for p in posts]
 
-    def find_one_by_id(self, pk: int) -> Optional[PostGetModel]:
+    def find_one_by_id(self, pk: int) -> PostGetModel | None:
         if post := self.db.session.get(Post, pk):
             return PostGetModel.model_validate(post)
 

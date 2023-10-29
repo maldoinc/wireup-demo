@@ -1,12 +1,13 @@
+from typing import Annotated
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session, sessionmaker
-from typing_extensions import Annotated
 from wireup import Wire, container
 
 
 @container.register
 class DatabaseConnection:
-    def __init__(self, connection_url: Annotated[str, Wire(param="db_connection_url")]):
+    def __init__(self, connection_url: Annotated[str, Wire(param="db_connection_url")]) -> None:
         self.engine = create_engine(connection_url)
         self._session = None
 

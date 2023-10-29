@@ -4,7 +4,7 @@ from service import DatabaseConnection
 
 
 class DatabaseConnectionTest(TestCase):
-    def test_db_reuses_same_session(self):
+    def test_db_reuses_same_session(self) -> None:
         db = DatabaseConnection("sqlite://")
 
         self.assertEqual(
