@@ -3,18 +3,18 @@ from unittest import TestCase
 
 from app.model.app import EmailAddress, EmailMessage
 from app.model.config import NotificationMailerConfig
-from app.service import MailerService
+from app.service.mailer_service import MailerServiceImpl
 
 
-class TestMailer(TestCase):
+class TestMailerImpl(TestCase):
     def setUp(self) -> None:
-        self.mailer = MailerService(
+        self.mailer = MailerServiceImpl(
             notifier_config=NotificationMailerConfig(
                 from_name="from_name",
                 from_address="mailer@example.com",
                 admin_name="Bob",
                 admin_address="bob@example.com",
-                dsn="smtp:///null",
+                dsn="smtp:///dev/null",
             ),
         )
 

@@ -1,6 +1,6 @@
 import unittest
 from datetime import datetime
-from unittest.mock import MagicMock
+from test.fixtures import TestMailer
 
 from app.model.api import PostCreateModel
 from app.model.db import DbBaseModel
@@ -11,6 +11,7 @@ from app.service.post_service import PostService
 class TestPostService(unittest.TestCase):
     def setUp(self) -> None:
         self.db = DatabaseConnection("sqlite://")
+        self.mailer = TestMailer()
         DbBaseModel.metadata.create_all(self.db.engine)
 
     def test_creates_post_and_notifies(self) -> None:
@@ -20,8 +21,6 @@ class TestPostService(unittest.TestCase):
             created_at=datetime(2023, 1, 1),
         )
         repository = PostRepository(self.db)
-        mailer = MagicMock()
-
-        db_post = PostService(repository=repository, mailer=mailer).create_post(post_model)
+        db_post = PostService(repository=repository, mailer=self.mailer).create_post(post_model)
         self.assertEqual(db_post.id, 1)
-        mailer.notify_admin_for_post.assert_called_once_with(db_post)
+        self.assertEqual(self.mailer.mail_sent_for_post, db_post)

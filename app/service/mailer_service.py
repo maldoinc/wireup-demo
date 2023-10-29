@@ -1,3 +1,4 @@
+import abc
 from dataclasses import dataclass
 from typing import Annotated
 
@@ -8,19 +9,25 @@ from app.model.config import NotificationMailerConfig
 from app.model.db import Post
 
 
-# Register a mailer service. Registration can be done on dataclasses as well,
-# although a services does not usually transfer data.
-# The dataclass decorator provides an `__init__` method which the container makes use of.
-# So this is really just a shorter way to define an init method.
-#
-# Despite how this might look this is still "constructor" injection
-# rather than field injection which is deliberately NOT supported.
-#
-# Order here is important and @dataclass must be closer to the
-# class declaration so that it is executed before `container.register`.
+# Declare an abstract type as an "interface".
+# This type cannot be directly instantiated by the container.
+# It also doesn't HAVE to inherit from ABC either.
+# This defines the contract for all services implementing MailerService
+@container.abstract
+class MailerService(abc.ABC):
+    @abc.abstractmethod
+    def notify_admin_for_post(self, post: Post) -> None:
+        raise NotImplementedError()
+
+
+# Register this as an implementation for MailerService.
+# This class must directly inherit from the interface.
+# When autowiring ask for the MailerService and this will get
+# injected instead.
+# See: https://maldoinc.github.io/wireup/latest/interfaces/
 @container.register
 @dataclass(frozen=True)
-class MailerService:
+class MailerServiceImpl(MailerService):
     # Values in the parameter bag don't have to be scalar.
     # Structured data can also be used for configuration.
     # The alternative here would be to inject all the
