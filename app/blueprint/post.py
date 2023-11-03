@@ -1,6 +1,7 @@
 from typing import Annotated
 
-from flask import Blueprint, Response, abort, request
+from flask import Blueprint, Response, abort
+from request_mapper import FromRequestBody
 from wireup import Wire, container
 
 from app.model.api import PostCreateModel
@@ -25,8 +26,9 @@ def get_posts(post_repository: PostRepository) -> Response:
 # Dependencies will get injected based on their type.
 # Container will skip any unknown parameters so that
 # wireup can be used in conjunction with other libraries or frameworks.
-def create_post(post_service: PostService) -> Response:
-    new_post = post_service.create_post(PostCreateModel.model_validate(request.json))
+# In this case, "body" argument belongs to the request-mapper library.
+def create_post(post_service: PostService, body: FromRequestBody[PostCreateModel]) -> Response:
+    new_post = post_service.create_post(body)
 
     return ApiResponse.created(
         data=new_post,
