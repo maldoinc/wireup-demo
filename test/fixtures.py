@@ -5,7 +5,7 @@ from app.model.db import Post
 from app.service import MailerService
 
 
-def _make_db_post(i: int) -> Post:
+def make_db_post(i: int) -> Post:
     return Post(
         title=f"title {i}",
         content=f"content {i}",
@@ -13,7 +13,7 @@ def _make_db_post(i: int) -> Post:
     )
 
 
-def _make_api_post(i: int) -> PostGetModel:
+def make_api_post(i: int) -> PostGetModel:
     return PostGetModel(
         id=i,
         title=f"title {i}",

@@ -17,7 +17,7 @@ from app.model.db import Post
 class MailerService(abc.ABC):
     @abc.abstractmethod
     def notify_admin_for_post(self, post: Post) -> None:
-        raise NotImplementedError()
+        raise NotImplementedError
 
 
 # Register this as an implementation for MailerService.

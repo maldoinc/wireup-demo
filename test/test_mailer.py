@@ -1,4 +1,4 @@
-from test.fixtures import _make_db_post
+from test.fixtures import make_db_post
 from unittest import TestCase
 
 from app.model.app import EmailAddress, EmailMessage
@@ -19,7 +19,7 @@ class TestMailerImpl(TestCase):
         )
 
     def test_mailer_generates_email(self) -> None:
-        email = self.mailer.make_email_from_post(_make_db_post(1))
+        email = self.mailer.make_email_from_post(make_db_post(1))
 
         self.assertEqual(
             email,

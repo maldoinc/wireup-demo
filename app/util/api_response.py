@@ -1,4 +1,4 @@
-from typing import Any, ParamSpec
+from typing import Any
 
 from flask import Response, jsonify, url_for
 from pydantic import BaseModel
@@ -8,7 +8,6 @@ from app.model.db import DbBaseModel
 
 Model = BaseModel | DbBaseModel
 ResponseObject = list[Model] | Model
-P = ParamSpec("P")
 
 
 def dump_model(model: Model) -> Any:
@@ -19,7 +18,7 @@ def dump_model(model: Model) -> Any:
 
 
 class ApiEndpoint:
-    def __init__(self, name: str, **params: P.kwargs) -> None:
+    def __init__(self, name: str, **params: Any) -> None:
         self.name = name
         self.params = params
 
