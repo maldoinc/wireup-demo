@@ -1,13 +1,13 @@
 from dataclasses import dataclass
 
-from wireup import container
+from wireup import service
 
 from app.model.api import PostGetModel
 from app.model.db import Post
 from app.service import DatabaseConnection
 
 
-@container.register
+@service
 @dataclass
 class PostRepository:
     # Service injection is performed by the declared type so this

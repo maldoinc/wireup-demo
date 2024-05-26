@@ -2,7 +2,7 @@ from typing import Annotated
 
 from flask import Blueprint, Response, abort
 from request_mapper import FromRequestBody
-from wireup import Wire, container
+from wireup import Inject, container
 
 from app.model.api import PostCreateModel
 from app.service import PostRepository
@@ -42,7 +42,7 @@ def create_post(post_service: PostService, body: FromRequestBody[PostCreateModel
 # you can annotate injected services with `Wire()`.
 # If the container does not know about a type which is being explicitly asked
 # to inject, it will raise an error.
-def get_post(post_id: int, post_repository: Annotated[PostRepository, Wire()]) -> Response:
+def get_post(post_id: int, post_repository: Annotated[PostRepository, Inject()]) -> Response:
     if post := post_repository.find_one_by_id(post_id):
         return ApiResponse.ok(post)
 

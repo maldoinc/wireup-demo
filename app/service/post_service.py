@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 
-from wireup import container
+from wireup import service
 
 from app.model.api import PostCreateModel
 from app.model.db import Post
@@ -17,7 +17,7 @@ from app.service import MailerService, PostRepository
 #
 # Order here is important and @dataclass must be closer to the
 # class declaration so that it is executed before `container.register`.
-@container.register
+@service
 @dataclass
 class PostService:
     repository: PostRepository

@@ -19,4 +19,4 @@ and play around with to get familiar with the library.
 
 ### Running the api
 
-`DB_CONNECTION_URL=sqlite://blog.db MAILER_DSN="smtp://..." python -m app.app`
+`env FLASK_APP=app/app.py DB_CONNECTION_URL=sqlite:///var/blog.db MAILER_DSN="smtp://..." python -m flask run`

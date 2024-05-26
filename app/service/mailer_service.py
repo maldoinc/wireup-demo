@@ -2,7 +2,7 @@ import abc
 from dataclasses import dataclass
 from typing import Annotated
 
-from wireup import Wire, container
+from wireup import Inject, abstract, service
 
 from app.model.app import EmailAddress, EmailMessage
 from app.model.config import NotificationMailerConfig
@@ -13,7 +13,7 @@ from app.model.db import Post
 # This type cannot be directly instantiated by the container.
 # It also doesn't HAVE to inherit from ABC either.
 # This defines the contract for all services implementing MailerService
-@container.abstract
+@abstract
 class MailerService(abc.ABC):
     @abc.abstractmethod
     def notify_admin_for_post(self, post: Post) -> None:
@@ -25,7 +25,7 @@ class MailerService(abc.ABC):
 # When autowiring ask for the MailerService and this will get
 # injected instead.
 # See: https://maldoinc.github.io/wireup/latest/interfaces/
-@container.register
+@service
 @dataclass(frozen=True)
 class MailerServiceImpl(MailerService):
     # Values in the parameter bag don't have to be scalar.
@@ -35,7 +35,7 @@ class MailerServiceImpl(MailerService):
     # which is not as nice.
     notifier_config: Annotated[
         NotificationMailerConfig,
-        Wire(param="notification_mailer"),
+        Inject(param="notification_mailer"),
     ]
 
     def notify_admin_for_post(self, post: Post) -> None:

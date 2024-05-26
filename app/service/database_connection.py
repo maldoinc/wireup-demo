@@ -2,10 +2,10 @@ from typing import Annotated
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import Session, sessionmaker
-from wireup import Wire, container
+from wireup import Inject, service
 
 
-@container.register
+@service
 class DatabaseConnection:
     # DB service needs a connection DSN to work.
     # During application execution when this is managed and injected by the container,
@@ -16,7 +16,7 @@ class DatabaseConnection:
     # instead of storing it on disk.
 
     # Service init methods do not need to be decorated with @container.autowire.
-    def __init__(self, connection_url: Annotated[str, Wire(param="db_connection_url")]) -> None:
+    def __init__(self, connection_url: Annotated[str, Inject(param="db_connection_url")]) -> None:
         self.engine = create_engine(connection_url)
         self._session = None
 
