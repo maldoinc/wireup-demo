@@ -1,7 +1,7 @@
-from typing import Annotated
+from typing import Annotated, TypeVar
 
+import flask
 from flask import Blueprint, Response, abort
-from request_mapper import FromRequestBody
 from wireup import Inject, container
 
 from app.model.api import PostCreateModel
@@ -24,11 +24,8 @@ def get_posts(post_repository: PostRepository) -> Response:
 @bp.post("/")
 @container.autowire
 # Dependencies will get injected based on their type.
-# Container will skip any unknown parameters so that
-# wireup can be used in conjunction with other libraries or frameworks.
-# In this case, "body" argument belongs to the request-mapper library.
-def create_post(post_service: PostService, body: FromRequestBody[PostCreateModel]) -> Response:
-    new_post = post_service.create_post(body)
+def create_post(post_service: PostService) -> Response:
+    new_post = post_service.create_post(PostCreateModel(**flask.request.json))
 
     return ApiResponse.created(
         data=new_post,
@@ -39,7 +36,7 @@ def create_post(post_service: PostService, body: FromRequestBody[PostCreateModel
 @bp.get("/<int:post_id>")
 @container.autowire
 # Alternatively, if you want to be explicit about what will get injected
-# you can annotate injected services with `Wire()`.
+# you can annotate injected services with `Inject()`.
 # If the container does not know about a type which is being explicitly asked
 # to inject, it will raise an error.
 def get_post(post_id: int, post_repository: Annotated[PostRepository, Inject()]) -> Response:

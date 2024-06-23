@@ -2,9 +2,6 @@
 
 Demo application for [WireUp](https://maldoinc.github.io/wireup/), a Python dependency injection library.
 
-Additionally uses [request-mapper](https://github.com/maldoinc/python-request-mapper/) to map
-incoming request data to Pydantic models.
-
 ## Usage
 
 This is intended as a demo to showcase various aspects of wireup. Feel free to explore 

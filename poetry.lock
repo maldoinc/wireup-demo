@@ -425,21 +425,6 @@ files = [
 ]
 
 [[package]]
-name = "request-mapper"
-version = "0.1.0"
-description = "Map request data into pydantic models"
-optional = false
-python-versions = ">=3.8,<4.0"
-files = [
-    {file = "request_mapper-0.1.0-py3-none-any.whl", hash = "sha256:4aa75b3eafb48dfbeee733aac468fa18fcfe879610a9a6965ad6711c7203afa6"},
-    {file = "request_mapper-0.1.0.tar.gz", hash = "sha256:62343e4603e58bfd739c479d145f258eda1352d3e8f470afbae3f12583e6180b"},
-]
-
-[package.dependencies]
-pydantic = ">=1.0"
-typing-extensions = ">=4.1.0,<5.0.0"
-
-[[package]]
 name = "ruff"
 version = "0.1.15"
 description = "An extremely fast Python linter and code formatter, written in Rust."
@@ -585,4 +570,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.10"
-content-hash = "30c50ebe81dc396582413b817c60a116bea660c62505ae05e9a9e7a9d2b0a587"
+content-hash = "a02118cf5dc9da30c1d74045517a89bd6df8f0bb1ccee5ef2a0aac47672cab9a"
