@@ -3,8 +3,7 @@ from flask import Flask
 from pyaml_env import parse_config
 from wireup import container, initialize_container
 
-from app import service
-from app.blueprint.post import bp as post_blueprint
+from demoapp.blueprint.post import bp as post_blueprint
 
 
 def create_app() -> Flask:
@@ -18,7 +17,7 @@ def create_app() -> Flask:
     # notification_mailer is a dataclass that will get injected as a parameter.
     all_config = parse_config("config/parameters.yaml", loader=yaml.Loader)
     container.params.update(all_config["app"])
-    initialize_container(container, service_modules=[service])
+    initialize_container(container, service_modules=[])
 
     return flask_app
 

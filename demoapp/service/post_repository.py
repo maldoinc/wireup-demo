@@ -2,9 +2,9 @@ from dataclasses import dataclass
 
 from wireup import service
 
-from app.model.api import PostGetModel
-from app.model.db import Post
-from app.service import DatabaseConnection
+from demoapp.model.api import PostGetModel
+from demoapp.model.db import Post
+from demoapp.service.database_connection import DatabaseConnection
 
 
 @service

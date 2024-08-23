@@ -1,13 +1,13 @@
-from typing import Annotated, TypeVar
+from typing import Annotated
 
 import flask
 from flask import Blueprint, Response, abort
 from wireup import Inject, container
 
-from app.model.api import PostCreateModel
-from app.service import PostRepository
-from app.service.post_service import PostService
-from app.util import ApiEndpoint, ApiResponse
+from demoapp.model.api import PostCreateModel
+from demoapp.service.post_repository import PostRepository
+from demoapp.service.post_service import PostService
+from demoapp.util import ApiEndpoint, ApiResponse
 
 bp = Blueprint("post", __name__, url_prefix="/posts")
 

@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from app.service import DatabaseConnection
+from demoapp.service.database_connection import DatabaseConnection
 
 
 class DatabaseConnectionTest(TestCase):

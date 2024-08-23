@@ -2,10 +2,11 @@ import unittest
 from datetime import datetime
 from test.fixtures import TestMailer
 
-from app.model.api import PostCreateModel
-from app.model.db import DbBaseModel
-from app.service import DatabaseConnection, PostRepository
-from app.service.post_service import PostService
+from demoapp.model.api import PostCreateModel
+from demoapp.model.db import DbBaseModel
+from demoapp.service.database_connection import DatabaseConnection
+from demoapp.service.post_repository import PostRepository
+from demoapp.service.post_service import PostService
 
 
 class TestPostService(unittest.TestCase):

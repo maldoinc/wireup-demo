@@ -2,9 +2,10 @@ from dataclasses import dataclass
 
 from wireup import service
 
-from app.model.api import PostCreateModel
-from app.model.db import Post
-from app.service import MailerService, PostRepository
+from demoapp.model.api import PostCreateModel
+from demoapp.model.db import Post
+from demoapp.service.mailer_service import MailerService
+from demoapp.service.post_repository import PostRepository
 
 
 # Register a Post service. Registration can be done on dataclasses as well,

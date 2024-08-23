@@ -4,9 +4,9 @@ from typing import Annotated
 
 from wireup import Inject, abstract, service
 
-from app.model.app import EmailAddress, EmailMessage
-from app.model.config import NotificationMailerConfig
-from app.model.db import Post
+from demoapp.model.app import EmailAddress, EmailMessage
+from demoapp.model.config import NotificationMailerConfig
+from demoapp.model.db import Post
 
 
 # Declare an abstract type as an "interface".
