@@ -2,7 +2,7 @@ from dataclasses import dataclass
 
 from wireup import service
 
-from demoapp.models.api import PostCreateModel
+from demoapp.models.api import PostCreateModel, PostView
 from demoapp.models.db import Post
 from demoapp.services.mailer_service import MailerService
 from demoapp.services.post_repository import PostRepository
@@ -24,10 +24,17 @@ class PostService:
     repository: PostRepository
     mailer: MailerService
 
-    def create_post(self, post: PostCreateModel) -> Post:
+    def create_post(self, post: PostCreateModel) -> PostView:
         new_post = Post(**post.model_dump())
 
         self.repository.save(new_post)
-        self.mailer.notify_admin_for_post(new_post)
 
-        return new_post
+        post_view = PostView(
+            id=new_post.id,
+            title=new_post.title,
+            content=new_post.content,
+            created_at=new_post.created_at,
+        )
+        self.mailer.notify_admin_for_post(post_view)
+
+        return post_view

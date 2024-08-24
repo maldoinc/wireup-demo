@@ -1,24 +1,17 @@
-import yaml
 from flask import Flask
-from pyaml_env import parse_config
-from wireup import container, initialize_container
+from wireup.integration.flask_integration import wireup_init_flask_integration
 
 from demoapp import services
-from demoapp.blueprints.post import bp as post_blueprint
+from demoapp.blueprint.post import bp as post_blueprint
+from demoapp.config import get_config
 
 
 def create_app() -> Flask:
     flask_app = Flask(__name__)
 
     flask_app.register_blueprint(post_blueprint)
-
-    # Load all configuration from yaml into a dict then register them in the container.
-    # Services asking for parameter can reference them by name.
-    # Note that types don't have to be just scalar values.
-    # notification_mailer is a dataclass that will get injected as a parameter.
-    all_config = parse_config("config/parameters.yaml", loader=yaml.Loader)
-    container.params.update(all_config["app"])
-    initialize_container(container, service_modules=[services])
+    flask_app.config.update(get_config())
+    wireup_init_flask_integration(flask_app, service_modules=[services])
 
     return flask_app
 

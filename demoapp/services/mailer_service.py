@@ -4,9 +4,9 @@ from typing import Annotated
 
 from wireup import Inject, abstract, service
 
+from demoapp.models.api import PostView
 from demoapp.models.app import EmailAddress, EmailMessage
 from demoapp.models.config import NotificationMailerConfig
-from demoapp.models.db import Post
 
 
 # Declare an abstract type as an "interface".
@@ -16,7 +16,7 @@ from demoapp.models.db import Post
 @abstract
 class MailerService(abc.ABC):
     @abc.abstractmethod
-    def notify_admin_for_post(self, post: Post) -> None:
+    def notify_admin_for_post(self, post: PostView) -> None:
         raise NotImplementedError
 
 
@@ -38,10 +38,10 @@ class MailerServiceImpl(MailerService):
         Inject(param="notification_mailer"),
     ]
 
-    def notify_admin_for_post(self, post: Post) -> None:
+    def notify_admin_for_post(self, post: PostView) -> None:
         self.send_email(self.make_email_from_post(post))
 
-    def make_email_from_post(self, post: Post) -> EmailMessage:
+    def make_email_from_post(self, post: PostView) -> EmailMessage:
         return EmailMessage(
             from_address=EmailAddress(
                 name=self.notifier_config.from_name,
@@ -58,8 +58,7 @@ class MailerServiceImpl(MailerService):
         )
 
     def send_email(self, message: EmailMessage) -> None:
-        msg = (
-            f'Cannot send message with subject "{message.subject}" '
+        print(
+            f'Sending email: "{message.subject}",\n\n{message.body}.\n'
             f"from dsn {self.notifier_config.dsn}"
         )
-        raise NotImplementedError(msg)

@@ -22,6 +22,6 @@ class TestPostService(unittest.TestCase):
             created_at=datetime(2023, 1, 1),
         )
         repository = PostRepository(self.db)
-        db_post = PostService(repository=repository, mailer=self.mailer).create_post(post_model)
-        self.assertEqual(db_post.id, 1)
-        self.assertEqual(self.mailer.mail_sent_for_post, db_post)
+        new_post = PostService(repository=repository, mailer=self.mailer).create_post(post_model)
+        self.assertEqual(new_post.id, 1)
+        self.assertEqual(self.mailer.mail_sent_for_post, new_post)

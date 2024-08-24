@@ -1,19 +1,22 @@
 from datetime import datetime, timezone
 
-from sqlalchemy import Column, DateTime, ForeignKey, Integer, String
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import relationship
+from sqlalchemy import DateTime, ForeignKey, Integer, String
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, relationship
 
-DbBaseModel = declarative_base()
+
+class DbBaseModel(DeclarativeBase):
+    pass
 
 
 class Post(DbBaseModel):
     __tablename__ = "posts"
 
-    id: Column[int] = Column(Integer, primary_key=True)
-    title: Column[str] = Column(String(255), nullable=False)
-    content: Column[str] = Column(String, nullable=False)
-    created_at: Column[datetime] = Column(DateTime, default=lambda: datetime.now(tz=timezone.utc))
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    title: Mapped[str] = mapped_column(String(255), nullable=False)
+    content: Mapped[str] = mapped_column(String, nullable=False)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime, default=lambda: datetime.now(tz=timezone.utc)
+    )
 
     comments = relationship("Comment", backref="post", lazy=True)
 
@@ -21,8 +24,10 @@ class Post(DbBaseModel):
 class Comment(DbBaseModel):
     __tablename__ = "comments"
 
-    id: Column[int] = Column(Integer, primary_key=True)
-    content: Column[str] = Column(String, nullable=False)
-    created_at: Column[datetime] = Column(DateTime, default=lambda: datetime.now(tz=timezone.utc))
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    content: Mapped[str] = mapped_column(String, nullable=False)
+    created_at: Mapped[datetime] = mapped_column(
+        DateTime, default=lambda: datetime.now(tz=timezone.utc)
+    )
 
-    post_id: Column[int] = Column(Integer, ForeignKey("posts.id"), nullable=False)
+    post_id: Mapped[int] = mapped_column(Integer, ForeignKey("posts.id"), nullable=False)
