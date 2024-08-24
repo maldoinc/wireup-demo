@@ -1,8 +1,8 @@
 from datetime import datetime
 
-from demoapp.model.api import PostGetModel
-from demoapp.model.db import Post
-from demoapp.service.mailer_service import MailerService
+from demoapp.models.api import PostGetModel
+from demoapp.models.db import Post
+from demoapp.services.mailer_service import MailerService
 
 
 def make_db_post(i: int) -> Post:

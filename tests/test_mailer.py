@@ -1,9 +1,9 @@
-from test.fixtures import make_db_post
 from unittest import TestCase
 
-from demoapp.model.app import EmailAddress, EmailMessage
-from demoapp.model.config import NotificationMailerConfig
-from demoapp.service.mailer_service import MailerServiceImpl
+from demoapp.models.app import EmailAddress, EmailMessage
+from demoapp.models.config import NotificationMailerConfig
+from demoapp.services.mailer_service import MailerServiceImpl
+from tests.fixtures import make_db_post
 
 
 class TestMailerImpl(TestCase):

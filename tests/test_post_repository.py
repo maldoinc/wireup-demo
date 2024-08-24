@@ -1,10 +1,10 @@
 import datetime
-from test.fixtures import make_api_post, make_db_post
 from unittest import TestCase
 
-from demoapp.model.db import DbBaseModel, Post
-from demoapp.service.database_connection import DatabaseConnection
-from demoapp.service.post_repository import PostRepository
+from demoapp.models.db import DbBaseModel, Post
+from demoapp.services.database_connection import DatabaseConnection
+from demoapp.services.post_repository import PostRepository
+from tests.fixtures import make_api_post, make_db_post
 
 
 class DatabaseConnectionTest(TestCase):

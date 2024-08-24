@@ -1,12 +1,12 @@
 from typing import Annotated
 
 import flask
-from flask import Blueprint, Response, abort
+from flask import Blueprint, Response, abort, jsonify
 from wireup import Inject, container
 
-from demoapp.model.api import PostCreateModel
-from demoapp.service.post_repository import PostRepository
-from demoapp.service.post_service import PostService
+from demoapp.models.api import PostCreateModel
+from demoapp.services.post_repository import PostRepository
+from demoapp.services.post_service import PostService
 from demoapp.util import ApiEndpoint, ApiResponse
 
 bp = Blueprint("post", __name__, url_prefix="/posts")
@@ -18,7 +18,7 @@ bp = Blueprint("post", __name__, url_prefix="/posts")
 # to the method than the flask one so that it is executed before it.
 @container.autowire
 def get_posts(post_repository: PostRepository) -> Response:
-    return ApiResponse.ok(post_repository.find_all())
+    return jsonify(post_repository.find_all())
 
 
 @bp.post("/")
